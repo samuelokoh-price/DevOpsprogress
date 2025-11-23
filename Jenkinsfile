@@ -102,7 +102,7 @@ pipeline {
 
                 sh 'docker rm -f simple-nodejs-app || true'
 
-                sh 'docker run -d -p 8080:8080 simple-nodejs-app'
+                sh 'docker run -d -p 3000:8080 --name simple-nodejs-app simple-nodejs-app'
             }
             post{
                 always{
