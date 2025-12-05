@@ -1,0 +1,86 @@
+---
+- name: Setup monitoring stack
+  hosts: monitoring
+  become: true
+
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install required prerequisites
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+          - git
+          - docker-compose-plugin
+        state: present
+        update_cache: yes
+
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker repository
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu jammy stable
+        state: present
+
+    - name: Install Docker
+      apt:
+        name: docker-ce
+        state: present
+        update_cache: yes
+
+    - name: Start and enable Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Clone monitoring repo
+      git:
+        repo: "https://github.com/samuelokoh-price/DevOpsprogress.git"
+        dest: /home/ubuntu/monitoring
+        version: main
+        update: yes
+
+    # 🔥 Cleanup tasks to avoid port conflicts
+    - name: Remove old Grafana container
+      docker_container:
+        name: grafana
+        state: absent
+      ignore_errors: yes
+
+    - name: Remove old Prometheus container
+      docker_container:
+        name: prometheus
+        state: absent
+      ignore_errors: yes
+
+    - name: Remove old Node Exporter container
+      docker_container:
+        name: node-exporter
+        state: absent
+      ignore_errors: yes
+
+    - name: Remove old cAdvisor container
+      docker_container:
+        name: cadvisor
+        state: absent
+      ignore_errors: yes
+
+    - name: Tear down existing stack
+      command: docker compose down
+      args:
+        chdir: /home/ubuntu/monitoring
+      ignore_errors: yes
+
+    - name: Run Docker Compose
+      command: docker compose up -d
+      args:
+        chdir: /home/ubuntu/monitoring
