@@ -44,7 +44,7 @@
 
     - name: Clone monitoring repo
       git:
-        repo: "https://github.com/samuelokoh-price/DevOpsprogress.git"
+        repo: "https://github.com/samuelokoh-price/End-to-End-Devops-pipeline-project.git"
         dest: /home/ubuntu/monitoring
         version: main
         update: yes

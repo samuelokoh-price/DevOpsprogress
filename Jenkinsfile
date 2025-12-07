@@ -4,7 +4,7 @@ pipeline {
         stage("Checkout"){
             steps{
                 echo "pulling code from github"
-                git branch: 'main', url: 'https://github.com/samuelokoh-price/DevOpsprogress.git'
+                git branch: 'main', url: 'https://github.com/samuelokoh-price/End-to-End-Devops-pipeline-project.git'
             }
             post{
                 always{
