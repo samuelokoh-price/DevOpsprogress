@@ -49,7 +49,7 @@
         version: main
         update: yes
 
-    # 🔥 Cleanup tasks to avoid port conflicts
+    # Cleanup tasks to avoid port conflicts
     - name: Remove old Grafana container
       docker_container:
         name: grafana
