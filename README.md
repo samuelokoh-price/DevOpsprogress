@@ -49,6 +49,17 @@ Real‑time monitoring and dashboards with Prometheus + Grafana.
 
 Infrastructure as Code using Terraform and Ansible.
 
+## Challenges I ran into:
+**Jenkins was not detecting my pipeline file.**
+   After checking the logs, I discovered that the Jenkinsfile name was incorrect — I had used a lowercase j. Renaming it with a capital J fixed the issue.
+**Grafana was running but not displaying any metrics.**
+   I later realized that Prometheus had not been added as a data source, and the Prometheus server URL was missing.
+**What I learned:**
+Small misconfigurations can break an entire pipeline
+Reading logs carefully is more effective than guessing
+DevOps is less about tools and more about understanding how systems connect and communicate
+This project helped me build confidence in debugging real-world DevOps issues and understanding the full lifecycle of deployment and monitoring.
+
 ## 🚀 How to Run (Conceptual)
 
 This project provisions infrastructure and deploys a monitoring stack automatically.  
